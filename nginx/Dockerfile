@@ -1,5 +1,5 @@
 # Use an official Nginx image as the base image
-FROM nginx:latest
+FROM nginx:alpine
 
 # Recieve args from docker compose file
     ARG DOMAIN_CER

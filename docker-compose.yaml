@@ -1,0 +1,57 @@
+# version: "3.8"
+
+# Server       : sofiaGPT compose file
+# Folder       : <gpt Front End Folder>
+# Auth         : Ayman Henry - Jul. 2024
+# ============================================================================
+
+services:
+  nginx_frontend:
+    image: nginx_frontend:latest
+    # env_file:
+    #  - ../gpt_be_docker/.env
+
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+      args:
+        - DOMAIN_CER=${DOMAIN_CER}
+        - DOMAIN_KEY=${DOMAIN_KEY}
+        - SRV_DOMAIN=${SRV_DOMAIN}
+
+    # container_name: nginx_frontend
+    #  always restart regardless of the exit status. ensures it is constantly running.
+    restart: always
+
+    environment:
+      # to give access to nginx.conf to read
+      - DOMAIN_CER=${DOMAIN_CER}
+      - DOMAIN_KEY=${DOMAIN_KEY}
+
+      # front end folder
+      - FRONT_END_FOLDER=${FRONT_END_FOLDER}
+      - SRV_DOMAIN=${SRV_DOMAIN}
+
+    volumes:
+      # those setting need to be compatable with ngnix.conf
+      # log and cach setting
+      - ./nginx/error_log.log:/etc/nginx/error_log.log
+      - ./nginx/access_log.log:/etc/nginx/access_log.log
+      - ./nginx/cache/:/etc/nginx/cache
+
+      # front end folder
+      - ./${FRONT_END_FOLDER}/:/srv/web/
+
+      # certificate
+      - ../certificate/${DOMAIN_CER}:/etc/nginx/${DOMAIN_CER}
+      - ../certificate/${DOMAIN_KEY}:/etc/nginx/${DOMAIN_KEY}
+
+    ports:
+      - ${NGINX_HTTP_FE}:80
+      - ${NGINX_HTTPS_FE}:443
+
+    networks:
+      - my-network
+
+networks:
+  my-network:

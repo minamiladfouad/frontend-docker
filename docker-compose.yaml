@@ -1,8 +1,6 @@
-# version: "3.8"
-
-# Server       : sofiaGPT compose file
-# Folder       : <gpt Front End Folder>
-# Auth         : Ayman Henry - Jul. 2024
+# Server       : 
+# Folder       : <Front End Folder>
+# Auth         : Mina Milad - Oct. 2025
 # ============================================================================
 
 services:

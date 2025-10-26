@@ -1,5 +1,5 @@
 # Use an official Nginx image as the base image
-FROM nginx:alpine
+FROM nginx:latest
 
 # Recieve args from docker compose file
     ARG DOMAIN_CER
@@ -11,9 +11,9 @@ FROM nginx:alpine
     ENV SRV_DOMAIN=$SRV_DOMAIN
 
 # debug info
-    Run echo "Debug nginx_frontend  ---- DOMAIN_CER=${DOMAIN_CER}"
-    Run echo "Debug nginx_frontend  ---- DOMAIN_KEY=${DOMAIN_KEY}"
-    Run echo "Debug nginx_frontend  ---- SRV_DOMAIN=${SRV_DOMAIN}"
+    RUN echo "Debug nginx_frontend  ---- DOMAIN_CER=${DOMAIN_CER}"
+    RUN echo "Debug nginx_frontend  ---- DOMAIN_KEY=${DOMAIN_KEY}"
+    RUN echo "Debug nginx_frontend  ---- SRV_DOMAIN=${SRV_DOMAIN}"
 
 # Copy certificate
     # no need to copy - linked as volume
